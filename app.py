@@ -4,9 +4,11 @@ import json
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/chatbot', methods=['POST'])
 def chatbot():
@@ -28,11 +30,12 @@ def chatbot():
         completion_tokens = message['usage']['completion_tokens']
         total_tokens = message['usage']['total_tokens']'''
         output_text = f"AI : <br><br>{content}<br>"
-        #<br>Prompt tokens: {prompt_tokens}<br>Completion tokens: {completion_tokens}<br>Total tokens: {total_tokens}
+        # <br>Prompt tokens: {prompt_tokens}<br>Completion tokens: {completion_tokens}<br>Total tokens: {total_tokens}
         return jsonify({'response': output_text})
     else:
-        error_message = f"Hata oluştu: {response.status_code} {response.reason}"
+        error_message = f"Hata olestr: {response.status_code} {response.reason}"
         return jsonify({'error': error_message})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
