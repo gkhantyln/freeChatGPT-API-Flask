@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Free ChatGPT API with Flask</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body style="--tw-bg-opacity: 1;
+    background-color: rgba(52,53,65,var(--tw-bg-opacity));
+    color: white;
+">
+    <div class="container my-5">
+      <h1 class="text-center">Free ChatGPT API with Flask</h1>
+      <div class="row justify-content-center mt-5">
+        <div class="col-sm-8 col-md-6">
+          <form id="chatbot-form">
+            <div class="form-group">
+              <label for="input-text">Write Your Question:</label>
+              <textarea class="form-control" id="input-text" rows="3" placeholder="Write it here..." style="--tw-bg-opacity: 1;
+    background-color: rgba(64,65,79,var(--tw-bg-opacity));color: #fff0c2;"></textarea>
+            </div>
+            <div class="form-group text-center">
+              <button type="submit" class="btn btn-secondary btn-lg active"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-5">
+        <div class="col-sm-8 col-md-6">
+          <div class="card">
+            <div class="card-body" id="output-div" style="color: #ffffff;--tw-bg-opacity: 1;background-color: rgba(64,65,79,var(--tw-bg-opacity));">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#chatbot-form').submit(function(e) {
+          e.preventDefault();
+          var input_text = $('#input-text').val();
+          $.ajax({
+            type: 'POST',
+            url: '/chatbot',
+            data: {input_text: input_text},
+            success: function(response) {
+              $('#output-div').html(response.response);
+            },
+            error: function(response) {
+              $('#output-div').html(response.error);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
