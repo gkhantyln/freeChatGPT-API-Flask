@@ -37,21 +37,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {
-        $('#chatbot-form').submit(function(e) {
-          e.preventDefault();
-          var input_text = $('#input-text').val();
-          $.ajax({
-            type: 'POST',
-            url: '/chatbot',
-            data: {input_text: input_text},
-            success: function(response) {
-              $('#output-div').html(response.response);
-            },
-            error: function(response) {
-              $('#output-div').html(response.error);
-            }
+          $('#chatbot-form').submit(function(e) {
+            e.preventDefault();
+            var input_text = $('#input-text').val();
+            $.ajax({
+              type: 'POST',
+              url: '/chatbot',
+              data: {input_text: input_text},
+              success: function(response) {
+                var responses = response.response.split('\n');
+                for (var i = 0; i < responses.length; i++) {
+                  $('#output-div').append(responses[i] + '<br>');
+                }
+              },
+              error: function(response) {
+                $('#output-div').html(response.error);
+              }
+            });
           });
-        });
       });
     </script>
   </body>
