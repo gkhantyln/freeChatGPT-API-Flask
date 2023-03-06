@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 import json
+import markdown
+
 
 app = Flask(__name__)
 
@@ -26,10 +28,11 @@ def chatbot():
     if response.status_code == 200:
         message = response.json()
         content = message['choices'][0]['message']['content']
+        content_md = markdown.markdown(content)  # Markdown format dönüştür
         '''prompt_tokens = message['usage']['prompt_tokens']
         completion_tokens = message['usage']['completion_tokens']
         total_tokens = message['usage']['total_tokens']'''
-        output_text = f"AI : <br><br>{content}<br>"
+        output_text = f"AI : <br>{content_md}<br>"
         # <br>Prompt tokens: {prompt_tokens}<br>Completion tokens: {completion_tokens}<br>Total tokens: {total_tokens}
         return jsonify({'response': output_text})
     else:
